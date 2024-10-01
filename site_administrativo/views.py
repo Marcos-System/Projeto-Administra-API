@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from api.models import Produto
 
 def home(request):
@@ -24,8 +24,9 @@ def home(request):
 
             produto = Produto(nome=nome, descricao=descricao, tipo=tipo, valor=preco, imagem=imagem)
             produto.save()
+            redirect('home')
 
     context = {
         "produtos": produtos,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'index.html', context)
