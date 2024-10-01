@@ -6,6 +6,18 @@
     <title>Document</title>
 </head>
 <body>
+
+    <div class="cadastro">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" name="nome" id="nome" placeholder="Nome">
+            <input type="text" name="descricao" id="descricao" placeholder="descrição">
+            <input type="text" name="tipo" id="tipo" placeholder="tipo">
+            <input type="number" name="preco" id="preco" placeholder="Preço" required step="0.01">
+            <input type="file" name="image" id="image">
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
     Produtos:
     {% for produto in produtos %}
         <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
