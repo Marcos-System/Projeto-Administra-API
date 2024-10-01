@@ -11,12 +11,10 @@ def home(request):
         preco = request.POST.get('preco')
         imagem = request.FILES.get('image')
 
-        # Verificar se o preço foi fornecido e é um valor decimal válido
         if preco:
             try:
-                preco = float(preco)  # Converter para decimal
+                preco = float(preco) 
             except ValueError:
-                # Tratar o erro de conversão caso o preço seja inválido
                 return render(request, 'home.html', {
                     'produtos': produtos,
                     'error': 'O valor do preço deve ser um número decimal válido.',
@@ -24,9 +22,9 @@ def home(request):
 
             produto = Produto(nome=nome, descricao=descricao, tipo=tipo, valor=preco, imagem=imagem)
             produto.save()
-            redirect('home')
+            return redirect('site_administrativo:home')
 
     context = {
         "produtos": produtos,
     }
-    return render(request, 'index.html', context)
+    return render(request, 'home.html', context)
