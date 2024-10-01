@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .cadastro {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input, form button {
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        form input:focus {
+            border-color: #5cb85c;
+            outline: none;
+        }
+
+        form button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        form button:hover {
+            background-color: #4cae4c;
+        }
+
+        .produto-lista {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .produto-lista h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .produto-item {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .produto-item img {
+            max-width: 100px;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+
+        .produto-item p {
+            margin: 0;
+            color: #666;
+            font-size: 1em;
+        }
+
+        .produto-item p span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            .produto-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .produto-item img {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cadastro">
+        <h1>Cadastro de Produto</h1>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="nome" id="nome" placeholder="Nome" required>
+            <input type="text" name="descricao" id="descricao" placeholder="Descrição" required>
+            <input type="text" name="tipo" id="tipo" placeholder="Tipo" required>
+            <input type="number" name="preco" id="preco" placeholder="Preço" required>
+            <input type="file" name="image" id="image" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <div class="produto-lista">
+        <h2>Produtos</h2>
+        {% for produto in produtos %}
+        <div class="produto-item">
+            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+            <div>
+                <p><span>Nome:</span> {{ produto.nome }}</p>
+                <p><span>Descrição:</span> {{ produto.descricao }}</p>
+                <p><span>Preço:</span> R$ {{ produto.valor }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+        
+</body>
+</html>
