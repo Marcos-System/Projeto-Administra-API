@@ -103,6 +103,37 @@
             color: #333;
         }
 
+        .search-bar {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .search-bar input {
+            padding: 12px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        
+        /* Estilizando o botão de editar */
+        .produto-item a {
+            margin-left: auto;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+        
+        .produto-item a:hover {
+            background-color: #0056b3;
+        }
+
         @media (max-width: 600px) {
             .produto-item {
                 flex-direction: column;
@@ -117,19 +148,24 @@
 </head>
 <body>
 
-    <div class="cadastro">
-        <h1>Cadastro de Produto</h1>
-        <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="text" name="nome" id="nome" placeholder="Nome" required>
-            <input type="text" name="descricao" id="descricao" placeholder="Descrição" required>
-            <input type="text" name="tipo" id="tipo" placeholder="Tipo" required>
-            <input type="number" name="preco" id="preco" placeholder="Preço" required>
-            <input type="file" name="image" id="image" required>
-            <button type="submit">Enviar</button>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="nome" id="nome" placeholder="Nome" required>
+        <input type="text" name="descricao" id="descricao" placeholder="Descrição" required>
+        <input type="text" name="tipo" id="tipo" placeholder="Tipo" required>
+        <input type="number" name="preco" id="preco" placeholder="Preço" required>
+        <input type="file" name="image" id="image" required>
+        <button type="submit">Enviar</button>
+    </form>
+    
+    <!-- Barra de Pesquisa -->
+    <div class="search-bar">
+        <form action="" method="GET">
+            <input type="text" name="search" placeholder="Pesquisar produtos..." value="{{ search_query }}">
         </form>
     </div>
-
+    
+    <!-- Lista de Produtos -->
     <div class="produto-lista">
         <h2>Produtos</h2>
         {% for produto in produtos %}
@@ -140,6 +176,9 @@
                 <p><span>Descrição:</span> {{ produto.descricao }}</p>
                 <p><span>Preço:</span> R$ {{ produto.valor }}</p>
             </div>
+    
+            <!-- Link Editar transformado em botão -->
+            <a href="{% url 'site_administrativo:editarProduto' produto.id %}">Editar</a>
         </div>
         {% endfor %}
     </div>

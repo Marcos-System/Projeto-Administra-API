@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Produto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .cadastro {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input, form button {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        form button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #4cae4c;
+        }
+
+        .delete-button {
+            background-color: #d9534f;
+        }
+
+        .delete-button:hover {
+            background-color: #c9302c;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .produto-imagem {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .produto-imagem img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cadastro">
+        <h2>Editar Produto</h2>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <!-- Exibe a imagem do produto -->
+        <div class="produto-imagem">
+            {% if produto.imagem %}
+                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+            {% else %}
+                <p>Este produto não possui imagem.</p>
+            {% endif %}
+        </div>
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="nome" id="nome" placeholder="Nome" value="{{ produto.nome }}" required>
+            <input type="text" name="descricao" id="descricao" placeholder="Descrição" value="{{ produto.descricao }}" required>
+            <input type="text" name="tipo" id="tipo" placeholder="Tipo" value="{{ produto.tipo }}" required>
+            <input type="number" name="preco" id="preco" placeholder="Preço" value="{{ produto.valor }}" required>
+            <input type="file" name="image" id="image">
+            <button type="submit">Salvar</button>
+        </form>
+
+        <!-- Botão para excluir o produto -->
+        <form action="{% url 'site_administrativo:excluir_produto' produto.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="delete-button">Excluir Produto</button>
+        </form>
+    </div>
+
+</body>
+</html>

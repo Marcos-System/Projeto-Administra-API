@@ -6,5 +6,7 @@ app_name = 'site_administrativo'
 
 urlpatterns = [
     path('', home, name='home'),
-
+    path('editar-produto/<int:id>/', editarProduto, name='editarProduto'),
+    path('excluir-produto/<int:id>/', excluir_produto, name='excluir_produto'),
+    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
