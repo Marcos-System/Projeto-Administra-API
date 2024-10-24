@@ -103,7 +103,7 @@
         </form>
 
         <!-- Botão para excluir o produto -->
-        <form action="{% url 'site_administrativo:excluir_produto' produto.id %}" method="POST">
+        <form action="{% url 'excluir_produto' produto.id %}" method="POST">
             {% csrf_token %}
             <button type="submit" class="delete-button">Excluir Produto</button>
         </form>
